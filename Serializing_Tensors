@@ -1,0 +1,19 @@
+1. Using torch.save(object_to_be_saved, 'location')
+But this file format is not interoperable.
+
+2. Serializing to HDF5 with h5py (Interoperable way)
+HDF5 is a portable, widely supported format for representing serialized multidimensional arrays, organized in a nested key value dictionary. Python supports HDF5 through the h5py library,
+which accepts and returns data in the form of NumPy arrays.
+
+import h5py
+f = h5py.File('../data/p1ch3/ourpoints.hdf5', 'w')
+dset = f.create_dataset('coords', data=points.numpy())
+f.close()
+f = h5py.File('../data/p1ch3/ourpoints.hdf5', 'r')
+dset = f['coords']  #coords is the key in HDF5 file.
+last_points = dset[-2:] 
+# or
+last_points = torch.from_numpy(dset[-2:])
+f.close()
+
+Reference: Deep Learning with Pytorch book
