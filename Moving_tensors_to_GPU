@@ -1,0 +1,17 @@
+data = 2 * data #This is performed on CPU
+data_gpu = 2 * data.to(device='cuda') #This is performed on gpu
+
+data_gpu tensor is not brought back to the CPU once the result has been computed.
+Execution of the last line results in:
+
+1. Copying of data tensor to gpu.
+2. Allocation of a new tensor on gpu to store the results of multiplication
+3. A handle for this new tensor is created 
+
+In order to transfer data to cpu,
+data_cpu = data_gpu.to(device='cpu')
+
+# Shorthands:
+data_gpu = data.cuda()
+data_gpu = data.cuda(0) #0 refers to the index of gpu, similar to cuda:0
+
